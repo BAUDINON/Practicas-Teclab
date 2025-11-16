@@ -1,25 +1,10 @@
-import api from '../service/api';
-import { useEffect, useState } from 'react';
-
+import BotonUbicacion from "../components/boton.ubicacion";
 
 function Home() {
-    const [message, setMessage] = useState('');
-
-    useEffect(() => {
-        api.get('/disponibilidad/hola')
-            .then(response => {
-                setMessage(response.data);
-            });
-    }, '');
-  
-  
-  
-  
-  
-    return (
+  return (
     <div>
-      <h1>Bienvenido al sistema</h1>
-      <p>{message}</p>
+      <h1>Bienvenido a Cabañas Bella Vista</h1>
+      <BotonUbicacion />
     </div>
   );
 }
