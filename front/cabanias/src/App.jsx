@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/home";
-import MostrarDisponibilidad from "./pages/disponibilidad";
-
+import Home from "./pages/home.jsx";
+import MostrarDisponibilidad from "./pages/disponibilidad.jsx";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "./index.css";
 
 function App() {
   return (
@@ -15,3 +17,4 @@ function App() {
 }
 
 export default App;
+

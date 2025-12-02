@@ -1,13 +1,23 @@
 import unidadAlquilable from '../tablas/unidad-alquilable.js';
+import imagenes from '../tablas/imagenes.js';
 
 const getUnidadesAlquilables = async (req, res) => {
-    try {
-    const unidadesAlquilables = await unidadAlquilable.findAll();
-    console.log(unidadesAlquilables);
-    res.send('Obtener todas las unidades alquilables');
-    } catch (error) {
-        res.status(500).json({message: "Error al obtener las unidades alquilables"});
-    }
+  try {
+    const unidadesAlquilables = await unidadAlquilable.findAll({
+      include: [
+        {
+          model: imagenes,
+          as: "imagenes",
+          attributes: ["id", "imagenUrl"]
+        }
+      ]
+    });
+
+    res.json(unidadesAlquilables);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al obtener las unidades alquilables" });
+  }
 };
 
 const createUnidadAlquilable = async (req, res) => {
@@ -56,9 +66,7 @@ const deleteUnidadAlquilable = async (req, res) => {
 const getUnidadAlquilable = async (req, res) => {
     const { id } = req.params;
     try {
-    const unidadAlquilable = await unidadAlquilable.findByPk({
-        where: { id }
-    })
+    const unidadAlquilable = await unidadAlquilable.findByPk(id);
     res.json(unidadAlquilable)
     } catch (error) {
         res.status(404).json({message: "Unidad alquilable no encontrada"});

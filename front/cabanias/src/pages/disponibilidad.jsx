@@ -60,8 +60,6 @@ function MostrarDisponibilidad() {
       return;
     }
 
-    
-
     api.post('/disponibilidad', form)
       .then((response) => {
         setUnidades(response.data);
@@ -69,96 +67,114 @@ function MostrarDisponibilidad() {
       })
       .catch((err) => {
         console.error(err);
-        
-        const mensaje =
-          err.response?.data?.error || 'Error al obtener disponibilidad';
+        const mensaje = err.response?.data?.error || 'Error al obtener disponibilidad';
         setError(mensaje);
         setUnidades([]);
       });
   };
 
+  
+  const calcularNoches = () => {
+    const ingreso = new Date(form.fechaIngreso);
+    const egreso = new Date(form.fechaEgreso);
+    const diff = egreso - ingreso;
+    return diff / (1000 * 60 * 60 * 24);
+  };
+
+  
+  const formatNumber = (num) => {
+    return num.toLocaleString("es-AR");
+  };
+
   return (
-    <div style={{
-      maxWidth: '600px',
-      margin: '40px auto',
-      padding: '30px',
-      backgroundColor: '#00743eff',
-      borderRadius: '15px',
-      boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-    }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '20px', color: '#333' }}>
-        Consultar disponibilidad
-      </h1>
+    <div 
+      className="d-flex justify-content-center align-items-center fondo-beige"
+      style={{ minHeight: "100vh" }}
+    >
+      <div className="card p-4 shadow card-naturaleza" style={{ width: "100%", maxWidth: "600px" }}>
+        
+        <h1 className="text-center mb-4" style={{ color: "var(--verde-primario)" }}>
+          Consultar disponibilidad
+        </h1>
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-        <label>
-          Fecha ingreso:
-          <input type="date" name="fechaIngreso" value={form.fechaIngreso}
-            onChange={handleChange} style={inputStyle} />
-        </label>
+        <form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
 
-        <label>
-          Fecha egreso:
-          <input type="date" name="fechaEgreso" value={form.fechaEgreso}
-            onChange={handleChange} style={inputStyle} />
-        </label>
+          <div>
+            <label className="form-label label-verde">Fecha ingreso</label>
+            <input 
+              type="date"
+              name="fechaIngreso"
+              value={form.fechaIngreso}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
 
-        <label>
-          Personas:
-          <input type="number" name="personas" value={form.personas}
-            onChange={handleChange} min="1" style={inputStyle} />
-        </label>
+          <div>
+            <label className="form-label label-verde">Fecha egreso</label>
+            <input 
+              type="date"
+              name="fechaEgreso"
+              value={form.fechaEgreso}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
 
-        <button type="submit" style={buttonStyle}>Consultar</button>
-      </form>
+          <div>
+            <label className="form-label label-verde">Personas</label>
+            <input 
+              type="number"
+              name="personas"
+              value={form.personas}
+              onChange={handleChange}
+              min="1"
+              className="form-control"
+            />
+          </div>
 
-      {error && <p style={{ color: 'red', marginTop: '15px' }}>{error}</p>}
+          <button type="submit" className="btn btn-verde mt-2">
+            Consultar
+          </button>
+        </form>
 
-      <h2 style={{ marginTop: '30px', color: '#000000ff' }}>Resultados:</h2>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {unidades.length > 0 ? (
-          unidades.map((u) => (
-            <li key={u.id} style={cardStyle}>
-              <strong>{u.nombre}</strong><br />
-              Capacidad: {u.capacidad} <br />
-              Precio mínimo: <strong>${u.precioMinimo}</strong>
-            </li>
-          ))
-        ) : (
-          !error && <p>No hay resultados.</p>
-        )}
-      </ul>
+        {error && <p className="text-danger mt-3">{error}</p>}
+
+        <h2 className="mt-4" style={{ color: "var(--verde-primario)" }}>Resultados:</h2>
+
+        <ul className="list-unstyled">
+          {unidades.length > 0 ? (
+            unidades.map((u) => {
+              const noches = calcularNoches();
+              const precioPorNoche = u.precioMinimo;
+              const precioTotal = noches * precioPorNoche;
+
+              return (
+                <li key={u.id} className="p-3 item-naturaleza mb-2">
+                  <strong>{u.nombre}</strong><br />
+                  Capacidad: {u.capacidad} Personas <br />
+                  Precio por noche: <strong>${formatNumber(precioPorNoche)}</strong> <br />
+                  Noches: {noches} <br />
+                  TOTAL: <strong>${formatNumber(precioTotal)}</strong>
+                </li>
+              );
+            })
+          ) : (
+            !error && <p>No hay resultados.</p>
+          )}
+        </ul>
+         <a
+              href="https://wa.me/5493564579613"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white"
+              style={{ fontSize: "1.6rem" }}
+            >
+              <i className="bi bi-whatsapp"></i>
+            </a>
+      </div>
     </div>
   );
 }
-
-const inputStyle = {
-  width: '100%',
-  padding: '8px',
-  marginTop: '5px',
-  borderRadius: '8px',
-  border: '1px solid #000000ff',
-  fontSize: '14px'
-};
-
-const buttonStyle = {
-  padding: '10px',
-  backgroundColor: '#007bff',
-  color: 'white',
-  border: 'none',
-  borderRadius: '8px',
-  cursor: 'pointer',
-  fontSize: '16px',
-  transition: 'background 0.3s'
-};
-
-const cardStyle = {
-  backgroundColor: '#292929ff',
-  border: '1px solid #000000ff',
-  borderRadius: '10px',
-  padding: '10px',
-  marginTop: '10px',
-  boxShadow: '0 2px 6px rgba(0,0,0,0.05)'
-};
 
 export default MostrarDisponibilidad;
