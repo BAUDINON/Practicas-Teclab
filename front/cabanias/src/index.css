@@ -1,0 +1,132 @@
+:root {
+  --beige-fondo: #F5EEDC; /* CAMBIO */
+  --beige: #f5f0e6; /* CAMBIO */
+
+  --verde-pastel: #7fbf90; /* CAMBIO */
+  --verde-primario: #5C806A; /* igual */
+  --verde-hover: #466556; /* CAMBIO */
+  --verde-osc-1: #6aac7e; /* CAMBIO */
+  --verde-osc-2: #559b6c; /* CAMBIO */
+
+  --verde-texto: #364A40; /* igual */
+
+  --card-blanco: #FFFFFF;
+  --borde-suave: #DAD3C8; /* CAMBIO */
+
+  --texto: #1B1B1B; /* CAMBIO */
+}
+
+body {
+  background-color: var(--beige-fondo) !important;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* BOTONES SUPERIORES */
+.botones-fixed {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  z-index: 100;
+}
+
+.boton-ubicacion,
+.boton-disponibilidad {
+  background-color: var(--verde-hover) !important;
+  border: none !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  font-size: 0.9rem !important;
+  border-radius: 12px !important;
+  transition: 0.2s !important;
+  text-decoration: none !important;
+}
+
+.boton-ubicacion:hover,
+.boton-disponibilidad:hover {
+  background-color: var(--verde-hover) !important;
+}
+
+/* BOTON VERDE */
+.btn-verde {
+  background-color: var(--verde-hover) !important;
+  color: white !important;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 600;
+  border: none !important;
+}
+
+.btn-verde:hover {
+  background-color: var(--verde-hover) !important;
+}
+
+.label-verde {
+  color: var(--verde-texto);
+  font-weight: 600;
+}
+
+/* TARJETAS */
+.item-naturaleza {
+  background-color: var(--card-blanco);
+  border: 1px solid var(--borde-suave);
+  border-radius: 10px;
+}
+
+.card.card-naturaleza {
+  background-color: var(--beige) !important;
+  border: 1px solid var(--borde-suave) !important;
+  border-radius: 12px !important;
+  color: var(--texto) !important;
+  overflow: hidden !important;
+}
+
+.card-title {
+  color: var(--verde-texto);
+  font-weight: bold;
+}
+
+.card-text {
+  color: var(--texto);
+}
+
+/* CARRUSEL EN LAS CARTAS */
+.carousel-item .img-carrusel {
+  height: 200px !important;
+  width: 100% !important;
+  object-fit: cover !important;
+  border-radius: 12px !important;
+}
+
+/* CARRUSEL PRINCIPAL */
+.aspect-ratio-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  border-radius: 12px;
+}
+
+.aspect-ratio-wrapper img {
+  width: 100%;
+  height: auto;
+  max-height: 66.66vw;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  border-radius: 12px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 10%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-size: 100%, 100%;
+  filter: brightness(1.2);
+}
+

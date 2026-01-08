@@ -14,6 +14,22 @@ const reserva = sequelize.define('reserva',{
     fechaEgreso: {
         type: DataTypes.DATE,
         allowNull: false
+    },
+    unidad_alquilableId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'unidad_alquilable',
+            key: 'id'
+        }
+    },
+    precioId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'precio',
+            key: 'id'
+        }
     }
 }, { tableName: 'reserva',
     timestamps: false

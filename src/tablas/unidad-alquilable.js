@@ -12,6 +12,12 @@ const unidadAlquilable = sequelize.define( 'unidad_alquilable', {
     },
     capacidad: {
         type: DataTypes.INTEGER,
+    },
+    descripcion: {
+        type: DataTypes.STRING(500),
+    },
+    servicios: {
+        type: DataTypes.STRING(500),
     }
 }, { tableName: 'unidad_alquilable',
     timestamps: false
